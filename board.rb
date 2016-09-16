@@ -35,20 +35,11 @@ class Board
 
   def chain_reveal(pos)
     self[pos].reveal
-    valid_neighbors = neighbors(pos).reject { |pos| self[pos].value > 0 }
+    valid_neighbors = neighbors(pos).reject { |pos| self[pos].is_revealed? }
     return if valid_neighbors.any? { |pos| self[pos].is_bomb? }
     valid_neighbors.each do |pos|
       chain_reveal(pos)
     end
-    # return if self[pos].value > 0
-    # valid_neighbors = neighbors(pos).reject {|pos| self[pos].is_bomb? || self[pos].is_revealed?}
-    # valid_neighbors.each do |pos|
-    #   chain_reveal(pos)
-    # end
-    # valid_neighbors = neighbors(pos).reject do |pos|
-    #   self[pos].is_bomb? || self[pos].is_revealed?
-    # end
-    # self[pos].reveal
   end
 
   private
