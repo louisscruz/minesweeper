@@ -9,8 +9,7 @@ class Minesweeper
   end
 
   def run
-    running = true
-    while running
+    until @lost
       @board.render
       puts "Choose a square: (ex. 5, 4)"
       coordinates = @player.get_coordinates
@@ -19,14 +18,20 @@ class Minesweeper
       make_move(coordinates, choice)
       system("clear")
     end
+    @board.render
+    p "#{@player.name}, you lose!"
   end
 
   private
 
   def make_move(pos, action)
     if action == "r"
-      #@board[pos].reveal
-      @board.chain_reveal(pos)
+      if @board[pos].is_bomb?
+        @lost = true
+        @board[pos].reveal
+      else
+        @board.chain_reveal(pos)
+      end
     else
       @board[pos].toggle_flag
     end

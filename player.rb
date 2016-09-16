@@ -1,4 +1,6 @@
 class Player
+  attr_reader :name
+  
   def self.generate
     puts "Please input your name"
     name = gets.chomp
